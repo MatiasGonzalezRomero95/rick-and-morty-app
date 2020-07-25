@@ -1,10 +1,10 @@
 import React from 'react';
-import './App.css';
+import Dashboard from "../src/components/Dashboard/Dashboard";
 
-function App() {
+const App = () => {
   return (
     <div className="App">
-      Rick and morty react app goes here
+      <Dashboard />
     </div>
   );
 }
