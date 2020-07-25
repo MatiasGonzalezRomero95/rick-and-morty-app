@@ -18,6 +18,9 @@ const CHARACTERS = gql`
                 location {
                     name
                 }
+                origin {
+                    name
+                }
             }
         }
     }
