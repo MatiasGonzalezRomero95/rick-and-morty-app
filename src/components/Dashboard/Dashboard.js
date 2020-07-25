@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React from "react";
 import {useQuery, gql} from "@apollo/client";
 import usePagination from "../../../src/hooks/usePagination";
 import CharacterCard from "../CharacterCard/CharacterCard";
@@ -26,7 +26,8 @@ const CHARACTERS = gql`
 `
 
 const Dashboard = () => {
-  const {currentPage, nextPage, previousPage} = usePagination()
+  const {currentPage, nextPage, previousPage} = usePagination();
+
   const {loading, error, data} = useQuery(CHARACTERS, {variables: {page: currentPage}});
 
   if (loading) return <p>loading....</p>
@@ -34,10 +35,12 @@ const Dashboard = () => {
 
   const {characters} = data;
 
+  const handleNextPageClick = () => nextPage();
+  const handlePreviousPageClick = () => previousPage();
+
   return (
     <>
-      <h2>Rick and morty app</h2>
-      <Grid container spacing={1}>
+      <Grid container spacing={1} >
         {
           characters.results.map((character) => (
             <Grid key={character.id} item xs={12} md={6} lg={3}>
@@ -55,12 +58,12 @@ const Dashboard = () => {
         alignItems="center"
       >
         <IconButton
-          onClick={() => previousPage()}
+          onClick={handlePreviousPageClick}
         >
           <NavigateBeforeIcon/>
         </IconButton>
         <IconButton
-          onClick={() => nextPage()}
+          onClick={handleNextPageClick}
         >
           <NavigateNextIcon/>
         </IconButton>
