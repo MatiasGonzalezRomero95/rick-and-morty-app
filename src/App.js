@@ -4,12 +4,11 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import Typography from '@material-ui/core/Typography';
 import {Grid} from "@material-ui/core";
 import DarkModeToggle from 'react-dark-mode-toggle';
-
 import Dashboard from "components/Dashboard/Dashboard";
 import useDarkMode from "hooks/useDarkMode";
-
+import './App.css';
 const useStyles = makeStyles(theme => ({
-  root: {
+  container: {
     padding: '1em'
   }
 }));
@@ -24,7 +23,7 @@ const App = () => {
         <CssBaseline/>
         <Grid
           container
-          className={classes.root}
+          className={classes.container}
         >
           <Grid item xs={12} md={12} lg={12}>
             <Grid
