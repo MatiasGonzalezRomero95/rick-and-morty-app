@@ -5,8 +5,8 @@ const DARK_PALLET = "dark";
 const LIGHT_PALLET = "light";
 
 const useDarkMode = (isDarkTheme) => {
-  const [darkState, setDarkState] = useState(isDarkTheme);
-  const palletType = darkState ? DARK_PALLET : LIGHT_PALLET;
+  const [isDarkModeActive, setDarkState] = useState(isDarkTheme);
+  const palletType = isDarkModeActive ? DARK_PALLET : LIGHT_PALLET;
 
   const theme = createMuiTheme({
     palette: {
@@ -18,7 +18,7 @@ const useDarkMode = (isDarkTheme) => {
     setDarkState((state) => !state)
   }, [setDarkState]);
 
-  return {theme, darkState, switchTheme};
+  return {theme, isDarkModeActive, switchTheme};
 }
 
 export default useDarkMode;
