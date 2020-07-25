@@ -1,33 +1,45 @@
-import React from "react";
+import React, {useState} from "react";
 import {useQuery, gql} from "@apollo/client";
+import usePagination from "../../../src/hooks/usePagination";
 import CharacterCard from "../CharacterCard/CharacterCard";
 import {Grid} from "@material-ui/core";
+import {IconButton} from '@material-ui/core';
+import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
+import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 
 const CHARACTERS = gql`
-  {
-  characters(page: 1) {
-    results {
-      id
-      name
-      image
-      gender
+    query getCharacters($page: Int!){
+        characters(page: $page) {
+            results {
+                id
+                name
+                image
+                gender
+                status
+                species
+                location {
+                    name
+                }
+            }
+        }
     }
-  }
-}
 `
 
 const Dashboard = () => {
-  const {loading, error, data} = useQuery(CHARACTERS);
+  const {currentPage, nextPage, previousPage} = usePagination()
+  const {loading, error, data} = useQuery(CHARACTERS, {variables: {page: currentPage}});
 
   if (loading) return <p>loading....</p>
   if (error) return <p>Something goes wrong</p>
+
+  const {characters} = data;
 
   return (
     <>
       <h2>Rick and morty app</h2>
       <Grid container spacing={1}>
         {
-          data.characters.results.map((character) => (
+          characters.results.map((character) => (
             <Grid key={character.id} item xs={12} md={6} lg={3}>
               <CharacterCard
                 character={character}
@@ -36,10 +48,25 @@ const Dashboard = () => {
           ))
         }
       </Grid>
-
+      <Grid
+        container
+        direction="row"
+        justify="flex-end"
+        alignItems="center"
+      >
+        <IconButton
+          onClick={() => previousPage()}
+        >
+          <NavigateBeforeIcon/>
+        </IconButton>
+        <IconButton
+          onClick={() => nextPage()}
+        >
+          <NavigateNextIcon/>
+        </IconButton>
+      </Grid>
     </>
   );
 }
 
 export default Dashboard;
-
