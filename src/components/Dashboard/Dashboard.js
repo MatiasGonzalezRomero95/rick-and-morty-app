@@ -3,7 +3,7 @@ import {useQuery, gql} from "@apollo/client";
 import {Grid} from "@material-ui/core";
 import usePagination from "hooks/usePagination";
 import CharacterCard from "components/CharacterCard/CharacterCard";
-import Pagination from "components/Pagination/pagination";
+import Pagination from "components/Pagination/Pagination";
 
 const CHARACTERS = gql`
     query getCharacters($page: Int!){
