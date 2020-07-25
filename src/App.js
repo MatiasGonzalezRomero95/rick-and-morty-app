@@ -15,10 +15,7 @@ const useStyles = makeStyles(theme => ({
 
 const App = () => {
   const classes = useStyles();
-
   const {theme, isSecondaryThemeActive, switchTheme} = useDarkMode(true)
-
-  const handleThemeChange = () => switchTheme();
 
   return (
     <div className="App">
@@ -36,7 +33,7 @@ const App = () => {
               alignItems="center"
             >
               <Typography variant="h6" display="inline"> Rick and morty app </Typography>
-              <Switch checked={isSecondaryThemeActive} onChange={handleThemeChange}/>
+              <Switch checked={isSecondaryThemeActive} onChange={switchTheme}/>
             </Grid>
           </Grid>
           <Grid item xs={12} md={12} lg={12}>

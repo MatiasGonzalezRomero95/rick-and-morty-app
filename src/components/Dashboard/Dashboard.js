@@ -1,11 +1,9 @@
 import React from "react";
 import {useQuery, gql} from "@apollo/client";
+import {Grid} from "@material-ui/core";
 import usePagination from "../../../src/hooks/usePagination";
 import CharacterCard from "../CharacterCard/CharacterCard";
-import {Grid} from "@material-ui/core";
-import {IconButton} from '@material-ui/core';
-import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
-import NavigateNextIcon from '@material-ui/icons/NavigateNext';
+import Pagination from "../Pagination/pagination";
 
 const CHARACTERS = gql`
     query getCharacters($page: Int!){
@@ -27,20 +25,15 @@ const CHARACTERS = gql`
 
 const Dashboard = () => {
   const {currentPage, nextPage, previousPage} = usePagination();
-
   const {loading, error, data} = useQuery(CHARACTERS, {variables: {page: currentPage}});
 
   if (loading) return <p>loading....</p>
   if (error) return <p>Something goes wrong</p>
 
   const {characters} = data;
-
-  const handleNextPageClick = () => nextPage();
-  const handlePreviousPageClick = () => previousPage();
-
   return (
     <>
-      <Grid container spacing={1} >
+      <Grid container spacing={1}>
         {
           characters.results.map((character) => (
             <Grid key={character.id} item xs={12} md={6} lg={3}>
@@ -57,16 +50,10 @@ const Dashboard = () => {
         justify="flex-end"
         alignItems="center"
       >
-        <IconButton
-          onClick={handlePreviousPageClick}
-        >
-          <NavigateBeforeIcon/>
-        </IconButton>
-        <IconButton
-          onClick={handleNextPageClick}
-        >
-          <NavigateNextIcon/>
-        </IconButton>
+        <Pagination
+          nextPage={nextPage}
+          previousPage={previousPage}
+        />
       </Grid>
     </>
   );

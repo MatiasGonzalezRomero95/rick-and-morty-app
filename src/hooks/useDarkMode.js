@@ -1,4 +1,4 @@
-import {useState} from "react";
+import {useState, useCallback} from "react";
 import {createMuiTheme} from "@material-ui/core/styles";
 
 const DARK_PALLET = "dark";
@@ -14,9 +14,11 @@ const useDarkMode = (isDarkTheme) => {
     }
   });
 
-  const switchTheme = () => setDarkState(!darkState);
+  const switchTheme = useCallback(() => {
+    setDarkState(!darkState)
+  }, [darkState]);
 
-  return { theme, darkState, switchTheme };
+  return {theme, darkState, switchTheme};
 }
 
 export default useDarkMode;
