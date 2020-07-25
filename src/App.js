@@ -1,11 +1,12 @@
 import React from 'react';
-import Dashboard from "../src/components/Dashboard/Dashboard";
 import {makeStyles, ThemeProvider} from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Switch from "@material-ui/core/Switch";
-import useDarkMode from "./hooks/useDarkMode";
 import Typography from '@material-ui/core/Typography';
 import {Grid} from "@material-ui/core";
+
+import Dashboard from "components/Dashboard/Dashboard";
+import useDarkMode from "hooks/useDarkMode";
 
 const useStyles = makeStyles(theme => ({
   root: {

@@ -1,9 +1,9 @@
 import React from "react";
 import {useQuery, gql} from "@apollo/client";
 import {Grid} from "@material-ui/core";
-import usePagination from "../../../src/hooks/usePagination";
-import CharacterCard from "../CharacterCard/CharacterCard";
-import Pagination from "../Pagination/pagination";
+import usePagination from "hooks/usePagination";
+import CharacterCard from "components/CharacterCard/CharacterCard";
+import Pagination from "components/Pagination/pagination";
 
 const CHARACTERS = gql`
     query getCharacters($page: Int!){

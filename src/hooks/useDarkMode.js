@@ -15,7 +15,7 @@ const useDarkMode = (isDarkTheme) => {
   });
 
   const switchTheme = useCallback(() => {
-    setDarkState(state => !state)
+    setDarkState((state) => !state)
   }, [setDarkState]);
 
   return {theme, darkState, switchTheme};

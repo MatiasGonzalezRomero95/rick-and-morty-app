@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+
 import {
   ApolloClient,
   ApolloProvider,
@@ -9,10 +10,12 @@ import {
   InMemoryCache
 } from "@apollo/client";
 
+const API_URI = 'https://rickandmortyapi.com/graphql';
+
 const client = new ApolloClient({
   cache: new InMemoryCache(),
   link: new HttpLink({
-    uri: 'https://rickandmortyapi.com/graphql'
+    uri: API_URI
   })
 });
 
