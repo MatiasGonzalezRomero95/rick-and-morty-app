@@ -15,6 +15,7 @@ import {red} from "@material-ui/core/colors";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import PropTypes from 'prop-types';
 import {pluralize, prefix} from 'utils/pluralize'
+import LoadingCharacterCard from "components/CharacterCard/LoadingCharacterCard"
 
 const useStyles = makeStyles(theme => ({
   card: {
@@ -40,9 +41,13 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const CharacterCard = ({character}) => {
+const CharacterCard = ({character = {}, isLoading}) => {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
+
+  const handleExpandClick = useCallback(() => {
+    setExpanded((expanded) => !expanded);
+  }, [setExpanded]);
 
   const {
     name,
@@ -55,9 +60,9 @@ const CharacterCard = ({character}) => {
     episode
   } = character;
 
-  const handleExpandClick = useCallback(() => {
-    setExpanded((expanded) => !expanded);
-  }, [setExpanded]);
+  if (isLoading) {
+    return <LoadingCharacterCard />;
+  }
 
   return (
     <Card className={classes.card} data-testid='character-card'>
@@ -117,7 +122,13 @@ const CharacterCard = ({character}) => {
 };
 
 CharacterCard.propTypes = {
-  character: PropTypes.object.isRequired,
+  character: PropTypes.object,
+  isLoading: PropTypes.bool,
 };
+
+CharacterCard.defaultProps = {
+  character: {},
+  isLoading: false
+}
 
 export default CharacterCard;

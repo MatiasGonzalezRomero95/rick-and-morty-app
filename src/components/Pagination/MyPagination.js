@@ -20,7 +20,7 @@ const MyPagination = memo(({currentPage, pagesCount, onChange}) => {
     }
 
     onChange(page)
-  }, [onChange]);
+  }, [currentPage, onChange]);
 
   return (
     <div data-testid='pagination' className={classes.root}>

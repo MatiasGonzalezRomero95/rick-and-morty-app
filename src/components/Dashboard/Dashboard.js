@@ -37,42 +37,53 @@ const CHARACTERS = gql`
 `
 
 const Dashboard = () => {
-  const {currentPage, setCurrentPage} = usePagination();
-  const {loading, error, data} = useQuery(CHARACTERS, {variables: {page: currentPage}});
+    const {currentPage, setCurrentPage} = usePagination();
+    const {loading, error, data} = useQuery(CHARACTERS, {variables: {page: currentPage}});
 
-  if (loading) return <p>loading....</p>
-  if (error) return <p>Something goes wrong</p>
+    if (error) return <p>Something goes wrong</p>
 
-  const {characters} = data;
-  const { pages: pagesCount} = characters.info;
+    if (loading) {
+      return (
+        <Grid container spacing={1}>
+          {
+            //show a grid of character loading
+            Array.from(Array(30).keys()).map((item, index) => (
+              <Grid key={index} item xs={12} md={6} lg={3}>
+                <CharacterCard isLoading/>
+              </Grid>
+            ))
+          }
+        </Grid>)
+    }
 
-  return (
-    <>
-      <Grid container spacing={1}>
-        {
-          characters.results.map((character) => (
+    const {characters} = data;
+    const {pages: pagesCount} = characters.info;
+    return (
+      <>
+        <Grid container spacing={1}>
+          {characters.results.map((character) => (
             <Grid key={character.id} item xs={12} md={6} lg={3}>
               <CharacterCard
                 character={character}
               />
             </Grid>
-          ))
-        }
-      </Grid>
-      <Grid
-        container
-        direction="row"
-        justify="flex-end"
-        alignItems="center"
-      >
-        <MyPagination
-          pagesCount={pagesCount}
-          currentPage={currentPage}
-          onChange={setCurrentPage}
-        />
-      </Grid>
-    </>
-  );
-};
+          ))}
+        </Grid>
+        <Grid
+          container
+          direction="row"
+          justify="flex-end"
+          alignItems="center"
+        >
+          <MyPagination
+            pagesCount={pagesCount}
+            currentPage={currentPage}
+            onChange={setCurrentPage}
+          />
+        </Grid>
+      </>
+    );
+  }
+;
 
 export default Dashboard;
