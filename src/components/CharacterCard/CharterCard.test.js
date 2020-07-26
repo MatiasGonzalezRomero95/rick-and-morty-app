@@ -5,11 +5,19 @@ import CharacterCard from './CharacterCard';
 
 describe('Pagination', () => {
   test('renders Character Card component', () => {
-    render(<CharacterCard character={fakeCharacter()}/>);
+    // prepare
+    const fakedCharacter = fakeCharacter();
 
+    // action
+    render(<CharacterCard character={fakedCharacter}/>);
+
+    // asserts
     const characterCardElement = screen.getByTestId('character-card');
-
+    const characterNameElement = screen.getByRole('heading', { name: new RegExp(fakedCharacter.name, 'i')});
+    const characterStatusName = screen.getByRole('button', { name: new RegExp(fakedCharacter.status, 'i')})
     expect(characterCardElement).toBeInTheDocument();
+    expect(characterNameElement).toBeInTheDocument();
+    expect(characterStatusName).toBeInTheDocument();
   });
 });
 
@@ -25,6 +33,9 @@ const fakeCharacter = () => (
     },
     origin: {
       name: 'Earth (C-137) '
-    }
+    },
+    episode: [
+      { name: 'Pilot' }
+    ]
   }
 );

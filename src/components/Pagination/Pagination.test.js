@@ -1,53 +1,60 @@
 import React from 'react';
 import {render, screen, fireEvent} from '@testing-library/react';
 
-import Pagination from './Pagination';
+import MyPagination from 'components/Pagination/MyPagination';
 
 describe('Pagination', () => {
   test('renders Pagination component', () => {
+    // prepare
+    const setCurrentPage = jest.fn();
+
+    // action
     render(
-      <Pagination
-        nextPage={() => {
-        }}
-        previousPage={() => {
-        }}
+      <MyPagination
+        currentPage={1}
+        pagesCount={30}
+        onChange={setCurrentPage}
       />
     );
 
+    // aserts
     const paginationElement = screen.getByTestId('pagination');
-
     expect(paginationElement).toBeInTheDocument();
   });
 
-  test('click previous page', () => {
-    const nextPage = jest.fn();
-    const previousPage = jest.fn();
+  test('click go from page 1 to page 2', () => {
+    // prepare
+    const setCurrentPage = jest.fn();
 
+    // action
     render(
-      <Pagination
-        nextPage={nextPage}
-        previousPage={previousPage}
+      <MyPagination
+        currentPage={1}
+        pagesCount={30}
+        onChange={setCurrentPage}
       />
     );
+    fireEvent.click(screen.getByRole('button', { name: /go to page 2/i }));
 
-    fireEvent.click(screen.getByTestId('previous-page-button'));
-
-    expect(previousPage).toHaveBeenCalledTimes(1);
+    // assert
+    expect(setCurrentPage).toHaveBeenCalledTimes(1);
   });
 
-  test('click previous page', () => {
-    const nextPage = jest.fn();
-    const previousPage = jest.fn();
+  test('click go from page 1 to page 1', () => {
+    // prepare
+    const setCurrentPage = jest.fn();
 
+    //action
     render(
-      <Pagination
-        nextPage={nextPage}
-        previousPage={previousPage}
+      <MyPagination
+        currentPage={1}
+        pagesCount={30}
+        onChange={setCurrentPage}
       />
     );
+    fireEvent.click(screen.getByRole('button', { name: /page 1/i }));
 
-    fireEvent.click(screen.getByTestId('previous-page-button'));
-
-    expect(previousPage).toHaveBeenCalledTimes(1);
+    // assert
+    expect(setCurrentPage).toHaveBeenCalledTimes(0);
   });
 });

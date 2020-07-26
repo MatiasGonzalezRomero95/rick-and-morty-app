@@ -3,11 +3,16 @@ import {useQuery, gql} from "@apollo/client";
 import {Grid} from "@material-ui/core";
 import usePagination from "hooks/usePagination";
 import CharacterCard from "components/CharacterCard/CharacterCard";
-import Pagination from "components/Pagination/Pagination";
+import MyPagination from "components/Pagination/MyPagination";
 
 const CHARACTERS = gql`
     query getCharacters($page: Int!){
         characters(page: $page) {
+            info {
+                pages
+                next
+                prev
+            }
             results {
                 id
                 name
@@ -21,19 +26,26 @@ const CHARACTERS = gql`
                 origin {
                     name
                 }
+                episode {
+                    id
+                    name
+                    air_date
+                }
             }
         }
     }
 `
 
 const Dashboard = () => {
-  const {currentPage, nextPage, previousPage} = usePagination();
+  const {currentPage, setCurrentPage} = usePagination();
   const {loading, error, data} = useQuery(CHARACTERS, {variables: {page: currentPage}});
 
   if (loading) return <p>loading....</p>
   if (error) return <p>Something goes wrong</p>
 
   const {characters} = data;
+  const { pages: pagesCount} = characters.info;
+
   return (
     <>
       <Grid container spacing={1}>
@@ -53,9 +65,10 @@ const Dashboard = () => {
         justify="flex-end"
         alignItems="center"
       >
-        <Pagination
-          nextPage={nextPage}
-          previousPage={previousPage}
+        <MyPagination
+          pagesCount={pagesCount}
+          currentPage={currentPage}
+          onChange={setCurrentPage}
         />
       </Grid>
     </>

@@ -6,15 +6,15 @@ const MIN_PAGE = 1;
 const usePagination = () => {
   const [currentPage, setCurrentPage] = useState(MIN_PAGE);
 
-  const nextPage = useCallback(() => {
+  const goToNextPage = useCallback(() => {
     setCurrentPage((currentPage) => Math.min(currentPage + 1, MAX_PAGE));
   }, [setCurrentPage])
 
-  const previousPage = useCallback(() => {
+  const goToPreviousPage = useCallback(() => {
     setCurrentPage((currentPage) => Math.max(currentPage - 1, MIN_PAGE));
   }, [setCurrentPage])
 
-  return {currentPage, nextPage, previousPage};
+  return {currentPage, goToNextPage, goToPreviousPage, setCurrentPage};
 }
 
 export default usePagination;

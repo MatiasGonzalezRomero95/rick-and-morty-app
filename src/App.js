@@ -7,6 +7,7 @@ import DarkModeToggle from 'react-dark-mode-toggle';
 import Dashboard from "components/Dashboard/Dashboard";
 import useDarkMode from "hooks/useDarkMode";
 import './App.css';
+
 const useStyles = makeStyles(theme => ({
   container: {
     padding: '1em'
