@@ -16,6 +16,9 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import PropTypes from 'prop-types';
 
 const useStyles = makeStyles(theme => ({
+  card: {
+    transition: 'all 0.8s ease-out'
+  },
   media: {
     height: 0,
     paddingTop: "56.25%",
@@ -55,7 +58,7 @@ const CharacterCard = ({character}) => {
   };
 
   return (
-    <Card className={classes.root}>
+    <Card className={classes.card} data-testid='character-card'>
       <CardHeader
         title={
           <Grid
@@ -104,10 +107,10 @@ const CharacterCard = ({character}) => {
       </Collapse>
     </Card>
   );
-}
+};
 
 CharacterCard.propTypes = {
   character: PropTypes.object.isRequired,
-}
+};
 
 export default CharacterCard;

@@ -32,7 +32,12 @@ const App = () => {
               justify="space-between"
               alignItems="center"
             >
-              <Typography variant="h6" display="inline"> Rick and morty app </Typography>
+              <Typography
+                variant="h6"
+                display="inline"
+              >
+                Rick and morty app
+              </Typography>
               <DarkModeToggle
                 onChange={switchTheme}
                 checked={isDarkModeActive}
