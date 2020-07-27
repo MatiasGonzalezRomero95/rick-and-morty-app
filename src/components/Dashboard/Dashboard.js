@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React from "react";
 import {useQuery, gql} from "@apollo/client";
 import usePagination from "hooks/usePagination";
 import useSearch from "hooks/useSearch";
