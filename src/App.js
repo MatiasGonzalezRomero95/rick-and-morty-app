@@ -32,14 +32,15 @@ const App = () => {
               container
               direction="row"
               justify="space-between"
-              alignItems="center"
+              alignItems="flex-end"
               spacing={1}
             >
               <Typography
-                variant="h6"
+                variant="h5"
+                component="h5"
                 display="inline"
               >
-                Rick and morty app
+                Rick and Morty App
               </Typography>
               <DarkModeToggle
                 onChange={switchTheme}

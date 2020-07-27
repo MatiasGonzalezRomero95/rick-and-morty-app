@@ -79,7 +79,7 @@ const Dashboard = () => {
           className={classes.sticky}
           spacing={1}
         >
-          <Box mb={2} mt={2}>
+          <Box mb={2} mt={1}>
             <TextField
               label="Search by name"
               onChange={handleNameChange}

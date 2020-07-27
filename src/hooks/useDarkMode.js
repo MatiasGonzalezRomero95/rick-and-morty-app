@@ -11,6 +11,9 @@ const useDarkMode = (isDarkTheme) => {
   const theme = createMuiTheme({
     palette: {
       type: palletType,
+    },
+    typography: {
+      fontFamily: "Segoe UI Emoji"
     }
   });
 
