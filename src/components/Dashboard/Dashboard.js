@@ -1,13 +1,20 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import {useQuery, gql} from "@apollo/client";
-import {Grid} from "@material-ui/core";
 import usePagination from "hooks/usePagination";
-import CharacterCard from "components/CharacterCard/CharacterCard";
+import useSearch from "hooks/useSearch";
+import TextField from "@material-ui/core/TextField";
+import Box from '@material-ui/core/Box'
 import MyPagination from "components/Pagination/MyPagination";
+import CharacterList from "components/Dashboard/CharacterList";
+import InputAdornment from '@material-ui/core/InputAdornment';
+import SearchIcon from "@material-ui/icons/Search";
+import Grid from "@material-ui/core/Grid";
 
 const CHARACTERS = gql`
-    query getCharacters($page: Int!){
-        characters(page: $page) {
+    query getCharacters($page: Int!, $name: String){
+        characters(page: $page, filter:{
+            name: $name
+        }) {
             info {
                 pages
                 next
@@ -38,36 +45,43 @@ const CHARACTERS = gql`
 
 const Dashboard = () => {
     const {currentPage, setCurrentPage} = usePagination();
-    const {loading, error, data} = useQuery(CHARACTERS, {variables: {page: currentPage}});
+    const {name, handleNameChange} = useSearch("");
 
-    if (error) return <p>Something goes wrong</p>
+    const {loading, error, data = {}} = useQuery(CHARACTERS, {
+      variables: {
+        page: currentPage,
+        name: name
+      }
+    });
 
-    if (loading) {
-      return (
-        <Grid container spacing={1}>
-          {
-            //show a grid of character loading
-            Array.from(Array(30).keys()).map((item, index) => (
-              <Grid key={index} item xs={12} md={6} lg={3}>
-                <CharacterCard isLoading/>
-              </Grid>
-            ))
-          }
-        </Grid>)
-    }
+    const {characters = {info: {}}} = data;
+    const {pages: pagesCount = 0} = characters.info;
 
-    const {characters} = data;
-    const {pages: pagesCount} = characters.info;
     return (
       <>
+        <Grid
+          container
+          direction="row"
+          justify="flex-start"
+          alignItems="center"
+        >
+          <Box mb={2} mt={2}>
+            <TextField
+              label="Search by name"
+              onChange={handleNameChange}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="start">
+                    <SearchIcon/>
+                  </InputAdornment>
+                )
+              }}
+            />
+          </Box>
+        </Grid>
         <Grid container spacing={1}>
-          {characters.results.map((character) => (
-            <Grid key={character.id} item xs={12} md={6} lg={3}>
-              <CharacterCard
-                character={character}
-              />
-            </Grid>
-          ))}
+          {error && <p> No results to show..</p>}
+          {!error && <CharacterList isLoading={loading} characters={characters}/>}
         </Grid>
         <Grid
           container

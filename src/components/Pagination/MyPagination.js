@@ -9,8 +9,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-// Memoize to avoid re render the pagination on dark mode switch change, or other changes
-const MyPagination = memo(({currentPage, pagesCount, onChange}) => {
+const MyPagination = ({currentPage, pagesCount, onChange}) => {
   const classes = useStyles();
   // useCountRenders(); uncomment for debug purpose
 
@@ -31,7 +30,7 @@ const MyPagination = memo(({currentPage, pagesCount, onChange}) => {
       />
     </div>
   );
-});
+};
 
 MyPagination.propTypes = {
   currentPage: PropTypes.number.isRequired,
@@ -39,4 +38,5 @@ MyPagination.propTypes = {
   onChange: PropTypes.func.isRequired
 };
 
-export default MyPagination;
+// Memoize to avoid re render the pagination on dark mode switch change, or other changes
+export default memo(MyPagination);
