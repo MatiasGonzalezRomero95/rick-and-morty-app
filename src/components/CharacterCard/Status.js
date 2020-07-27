@@ -47,7 +47,7 @@ const Status = ({name, status}) => {
 
   return (
     <Tooltip
-      title={`${name} is ${status}`}
+      title={`${name} is ${status.toLowerCase()}`}
       placement="top"
     >
       <IconButton aria-label="">
