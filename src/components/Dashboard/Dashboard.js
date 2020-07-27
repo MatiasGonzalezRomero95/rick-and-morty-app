@@ -9,6 +9,7 @@ import CharacterList from "components/Dashboard/CharacterList";
 import InputAdornment from '@material-ui/core/InputAdornment';
 import SearchIcon from "@material-ui/icons/Search";
 import Grid from "@material-ui/core/Grid";
+import {makeStyles} from '@material-ui/core/styles';
 
 const CHARACTERS = gql`
     query getCharacters($page: Int!, $name: String){
@@ -43,7 +44,18 @@ const CHARACTERS = gql`
     }
 `
 
+const useStyles = makeStyles((theme) => ({
+  sticky: {
+    position: 'sticky',
+    top: 0,
+    zIndex: '1000',
+    background: theme.palette.background.default,
+    transition: 'background 0.8s ease-out'
+  }
+}));
+
 const Dashboard = () => {
+    const classes = useStyles();
     const {currentPage, setCurrentPage} = usePagination();
     const {name, handleNameChange} = useSearch("");
 
@@ -64,6 +76,7 @@ const Dashboard = () => {
           direction="row"
           justify="flex-start"
           alignItems="center"
+          className={classes.sticky}
         >
           <Box mb={2} mt={2}>
             <TextField
