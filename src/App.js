@@ -25,6 +25,7 @@ const App = () => {
         <Grid
           container
           className={classes.container}
+          spacing={1}
         >
           <Grid item xs={12} md={12} lg={12}>
             <Grid
@@ -32,6 +33,7 @@ const App = () => {
               direction="row"
               justify="space-between"
               alignItems="center"
+              spacing={1}
             >
               <Typography
                 variant="h6"

@@ -77,6 +77,7 @@ const Dashboard = () => {
           justify="flex-start"
           alignItems="center"
           className={classes.sticky}
+          spacing={1}
         >
           <Box mb={2} mt={2}>
             <TextField
